@@ -1,0 +1,64 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Project: Charm‑Builder for cutandcropped.com on Shopify
+
+## 1. Objective:
+– Build a pixel‑perfect “charm builder” like https://www.nomination.com/us_en/configurator/index.html#/./builder
+– Front‑end page on my Shopify store (cutandcropped.com) for customers
+– Back‑end Shopify app (in PHP, running under XAMPP + ngrok) for admin
+
+## 2. Authentication & App Setup:
+– Connect via Shopify OAuth using provided Client ID / Secret:
+    Client ID: d150db401c54423c75dd888758dc1b8b  
+    Client Secret: bc518a206c9d27416328809961d9b3f7
+– Run through OAuth handshake:
+    1. Use ngrok tunnel and XAMPP local PHP app
+    2. Whitelist the ngrok URL in Shopify Partners App settings
+    3. Generate access token
+    4. Store token in `.env` file securely
+
+## 3. Front‑end “Charm Builder” page:
+– Dynamically fetch all charms (products) from my store using Shopify Admin GraphQL API (2025 version)
+– Build UI identical in layout, interactivity, images, drag‑drop, preview, pricing, etc., to Nomination’s builder
+– Ensure the builder page is publicly accessible on cutandcropped.com (via a Shopify template or app proxy)
+– Use Dawn theme v15.0.0; if needed, modify Liquid and add JS/CSS
+
+## 4. Back‑end Admin Dashboard:
+– Available within installed app in Shopify Admin
+– Show:
+    * Number of custom charm orders placed
+    * List of recent custom charm orders (order ID, date, customer name, charms, pricing)
+    * Any other useful stats (e.g., total revenue, average charm price)
+– Admin UI can use HTML/CSS/JS or embedded within Shopify App Bridge
+
+## 5. Technology & Packages:
+– PHP (compatible with XAMPP local dev)
+– Composer packages as needed (e.g., Shopify SDK, Guzzle, Dotenv)
+– JS libraries for front‑end builder (Vue/React/jQuery or plain JS)
+– GraphQL client to fetch products/data
+
+## 6. Data Flow & Env:
+– After OAuth, store access token in `.env` as `SHOPIFY_ACCESS_TOKEN`, plus store/shop domain
+– Use GraphQL queries to fetch product list, details, inventory, media, pricing
+– Ensure front‑end builder pulls data dynamically via AJAX or app proxy
+
+## 7. Delivery Format:
+– Provide full PHP app source (with routes: install, OAuth callback, GraphQL fetch, admin dashboard, front‑end builder)
+– Provide theme changes or instructions for integration
+– Provide clear instructions on:
+    * How to run under XAMPP
+    * How to set up ngrok, whitelist URLs
+    * How to install app in my Shopify Partners store
+    * How to update `.env` and restart app
+
+## 8. Communication Assumptions:
+– You (Cursor AI) will research existing Nomination builder functionality and match pixel‑for‑pixel
+– You will not stop halfway; deliver everything in one go
+– You will clearly indicate which tasks I need to do (e.g., copy Client ID/Secret into app settings, run `composer install`, deploy ngrok)
+– Use straightforward language
+– No open questions – produce full deliverable with instructions
+
+

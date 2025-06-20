@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Charm Builder</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <div class="progress-bar">
+      <span :class="{active: step===1}">1. Choose Base</span>
+      <span :class="{active: step===2}">2. Add Charms</span>
+      <span :class="{active: step===3}">3. Preview</span>
+      <span :class="{active: step===4}">4. Add to Cart</span>
+    </div>
+    <div v-if="step===1" class="step step1">
+      <h2>Choose Your Base</h2>
+      <div class="bases">
+        <div v-for="base in bases" :key="base.id" @click="selectBase(base)" :class="{selected: selectedBase && selectedBase.id===base.id}">
+          <img :src="base.image" />
+          <div>{{ base.title }}</div>
+        </div>
+      </div>
+      <button @click="nextStep" :disabled="!selectedBase">Next</button>
+    </div>
+    <div v-if="step===2" class="step step2">
+      <h2>Add Charms</h2>
+      <div class="palette">
+        <div v-for="charm in charms" :key="charm.node.id" class="charm" draggable @dragstart="dragCharm(charm)">
+          <img :src="charm.node.images.edges[0]?.node.src" />
+          <div>{{ charm.node.title }}</div>
+          <div>${{ charm.node.variants.edges[0]?.node.price }}</div>
+        </div>
+      </div>
+      <div class="canvas" @drop="dropCharm" @dragover.prevent>
+        <div v-for="(slot, i) in slots" :key="i" class="slot" @click="removeCharm(i)">
+          <img v-if="slot" :src="slot.node.images.edges[0]?.node.src" />
+        </div>
+      </div>
+      <button @click="prevStep">Back</button>
+      <button @click="nextStep" :disabled="!hasCharms">Next</button>
+    </div>
+    <div v-if="step===3" class="step step3">
+      <h2>Preview</h2>
+      <div class="preview">
+        <div v-for="slot in slots" class="slot">
+          <img v-if="slot" :src="slot.node.images.edges[0]?.node.src" />
+        </div>
+      </div>
+      <div>Total: ${{ totalPrice }}</div>
+      <button @click="prevStep">Back</button>
+      <button @click="nextStep">Add to Cart</button>
+    </div>
+    <div v-if="step===4" class="step step4">
+      <h2>Added to Cart!</h2>
+      <p>Your custom charm bracelet has been added to the cart.</p>
+      <button @click="reset">Build Another</button>
+    </div>
+  </div>
+  <script src="vue.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html> 
